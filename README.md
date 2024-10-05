@@ -1,5 +1,5 @@
 # ft_ping
-
+```markdown
 ## Project Description
 `ft_ping` is a tool that allows you to ping other devices on the network using the ICMP protocol. This project is used to test network connections and check the accessibility of devices.
 
@@ -43,6 +43,7 @@ The test results will be displayed with colored output indicating success or fai
 
 ## Example Output
 Here is an example of the test output:
+    
     ```sh
     Running suite(s): SendReceivePing
     Destination IP: 142.250.190.78
@@ -53,4 +54,5 @@ Here is an example of the test output:
     TEST2: [OK]
     All tests passed successfully.
     ```
+
 If any test fails, the output will indicate the number of failed tests in red.

@@ -24,14 +24,15 @@ To install the project on your local environment, follow these steps:
 
 ## Usage
 To run the `ft_ping` tool, use the following command:
-```sh
-sudo ./ft_ping -h
+    ```sh
+    sudo ./ft_ping -h
+    ```
 
 Running Tests
 To run the tests for the ft_ping project, use the following command:
-
-```sh
-sudo make test
+    ```sh
+    sudo make test
+    ```
 
 The tests include:
 
@@ -41,15 +42,14 @@ The test results will be displayed with colored output indicating success or fai
 
 Example Output
 Here is an example of the test output:
-
-```sh
-Running suite(s): SendReceivePing
-Destination IP: 142.250.190.78
-Destination Port: 0
-bytes_received: 64
-sockfd: 3
-packet: <packet data>
-TEST2: [OK]
-All tests passed successfully.
-
+    ```sh
+    Running suite(s): SendReceivePing
+    Destination IP: 142.250.190.78
+    Destination Port: 0
+    bytes_received: 64
+    sockfd: 3
+    packet: <packet data>
+    TEST2: [OK]
+    All tests passed successfully.
+    ```
 If any test fails, the output will indicate the number of failed tests in red.

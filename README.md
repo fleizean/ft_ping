@@ -1,5 +1,5 @@
 # ft_ping
-```markdown
+
 ## Project Description
 `ft_ping` is a tool that allows you to ping other devices on the network using the ICMP protocol. This project is used to test network connections and check the accessibility of devices.
 

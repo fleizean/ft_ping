@@ -43,16 +43,14 @@ The test results will be displayed with colored output indicating success or fai
 
 ## Example Output
 Here is an example of the test output:
-    
-    ```sh
-    Running suite(s): SendReceivePing
-    Destination IP: 142.250.190.78
-    Destination Port: 0
-    bytes_received: 64
-    sockfd: 3
-    packet: <packet data>
-    TEST2: [OK]
-    All tests passed successfully.
-    ```
-
+```
+Running suite(s): SendReceivePing
+Destination IP: 142.250.190.78
+Destination Port: 0
+bytes_received: 64
+sockfd: 3
+packet: <packet data>
+TEST2: [OK]
+All tests passed successfully.
+```
 If any test fails, the output will indicate the number of failed tests in red.

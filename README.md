@@ -28,7 +28,7 @@ To run the `ft_ping` tool, use the following command:
     sudo ./ft_ping -h
     ```
 
-Running Tests
+## Running Tests
 To run the tests for the ft_ping project, use the following command:
     ```sh
     sudo make test
@@ -36,11 +36,12 @@ To run the tests for the ft_ping project, use the following command:
 
 The tests include:
 
-test_send_ping: Tests the ability to send a ping packet.
-test_receive_ping: Tests the ability to receive a ping response.
+- `test_send_ping`: Tests the ability to send a ping packet.
+- `test_receive_ping`: Tests the ability to receive a ping response.
+
 The test results will be displayed with colored output indicating success or failure.
 
-Example Output
+## Example Output
 Here is an example of the test output:
     ```sh
     Running suite(s): SendReceivePing

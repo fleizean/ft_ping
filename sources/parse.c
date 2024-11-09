@@ -25,6 +25,6 @@ void parse_arguments(int ac, char **av, t_ping *ping)
                 exit(EXIT_FAILURE);
         }
     }
-
+    ping->is_verbose_error = false;
     ping->dest_ip = av[ac - 1];
 }

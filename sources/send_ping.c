@@ -1,9 +1,14 @@
 #include "../includes/ft_ping.h"
 
-void send_ping(int sock, struct sockaddr_in *dest_addr, char *packet, int packet_size)
+bool send_ping(int sock, struct sockaddr_in *dest_addr, char *packet, int packet_size)
 {
-    if (sendto(sock, packet, packet_size, 0, (struct sockaddr *)dest_addr, sizeof(*dest_addr)) <= 0)
+    int bytes_sent = sendto(sock, packet, packet_size, 0, (struct sockaddr *)dest_addr, sizeof(*dest_addr));
+    if (bytes_sent <= 0)
     {
-        perror("sendto");
+        char ip_str[INET_ADDRSTRLEN];
+        inet_ntop(AF_INET, &(dest_addr->sin_addr), ip_str, INET_ADDRSTRLEN);
+        fprintf(stderr, "%d bytes from gateway (%s): %s\n", packet_size, ip_str, strerror(errno));
+        return false;
     }
+    return true;
 }

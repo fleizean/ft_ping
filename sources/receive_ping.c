@@ -1,7 +1,7 @@
 #include "../includes/ft_ping.h"
 #include <sys/time.h>
 
-int receive_ping(int sock, char *packet, int packet_size)
+int receive_ping(int sock, char *packet, int packet_size, bool *is_verbose_error)
 {
     struct sockaddr_in r_addr;
     socklen_t addr_len = sizeof(r_addr);
@@ -27,6 +27,16 @@ int receive_ping(int sock, char *packet, int packet_size)
     {
         return bytes_received;
     }
+    else if (icmp_hdr->type == ICMP_DEST_UNREACH)
+    {
+
+        char ip_str[INET_ADDRSTRLEN];
+        inet_ntop(AF_INET, &(r_addr.sin_addr), ip_str, INET_ADDRSTRLEN);
+        printf("%d bytes from gateway (%s): Destination Port Unreachable\n", bytes_received, ip_str);
+        *is_verbose_error = true;
+        return -1;
+    }
+
 
     return -1;
 }

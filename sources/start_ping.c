@@ -19,11 +19,14 @@ void start_ping(t_ping *ping)
         gettimeofday(&start, NULL);
 
         // Paket gönder
-        send_ping(ping->sock_fd, &ping->dest_addr, packet, PING_PKT_S);
+        if (!send_ping(ping->sock_fd, &ping->dest_addr, packet, PING_PKT_S))
+        {
+            ping->is_verbose_error = true;
+        }
 
         // Paket al
-        received = receive_ping(ping->sock_fd, packet, PING_PKT_S);
-
+        received = receive_ping(ping->sock_fd, packet, PING_PKT_S, &(ping->is_verbose_error));
+        printf("%d",ping->is_verbose_error);
         // Zamanı al
         gettimeofday(&end, NULL);
 
@@ -54,24 +57,22 @@ void start_ping(t_ping *ping)
             struct iphdr *ip_hdr = (struct iphdr *)packet;
             struct icmphdr *icmp_hdr = (struct icmphdr *)(packet + (ip_hdr->ihl * 4));
 
-            
-
-            // Eğer -v bayrağı aktifse, daha ayrıntılı bilgi yazdır
-            if (ping->is_verbose)
+            if (!ping->is_verbose)
             {
-                char host[NI_MAXHOST];
-                char ip[INET_ADDRSTRLEN];
-                inet_ntop(AF_INET, &ping->dest_addr.sin_addr, ip, INET_ADDRSTRLEN);
-                getnameinfo((struct sockaddr *)&ping->dest_addr, sizeof(ping->dest_addr), host, NI_MAXHOST, NULL, 0, 0);
-                printf("%d bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
-                       received, host, ip, icmp_hdr->un.echo.sequence,
-                       ip_hdr->ttl, rtt);
+                printf("%01d bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms\n",
+                received, ip, icmp_hdr->un.echo.sequence,
+                ip_hdr->ttl, rtt);
             }
-            else {
-                printf("%d bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
-                   received, host, ip, icmp_hdr->un.echo.sequence,
-                   ip_hdr->ttl, rtt);
+            else if (ping->is_verbose && !ping->is_verbose_error)
+            {
+                printf("%01d bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms\n",
+                received, ip, icmp_hdr->un.echo.sequence,
+                ip_hdr->ttl, rtt);
             }
+
+            // Eğer -v bayrağı aktifse, daha ayrıntılı bilgi yazdır 
+            
+            ping->is_verbose_error = false;  
         }
 
         ping->sequence++;

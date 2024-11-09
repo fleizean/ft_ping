@@ -64,6 +64,7 @@ typedef struct s_ping {
     uint8_t					gateway_mac[6];
     t_stats                 stats;
     t_stats                 *result;
+    bool                    is_verbose_error;
 }							t_ping;
 
 // Global değişken
@@ -72,8 +73,8 @@ extern t_ping *g_ping;
 // Function prototypes
 uint16_t calculate_checksum(void *b, int len);
 void create_ping_packet(char *packet, int sequence);
-void send_ping(int sock, struct sockaddr_in *dest_addr, char *packet, int packet_size);
-int receive_ping(int sock, char *packet, int packet_size); // İmza güncellendi
+bool send_ping(int sock, struct sockaddr_in *dest_addr, char *packet, int packet_size);
+int receive_ping(int sock, char *packet, int packet_size, bool *is_verbose_error); // İmza güncellendi
 void handle_signal(int sig);
 void calculate_rtt(struct timeval *start, struct timeval *end, t_stats *stats);
 void parse_arguments(int ac, char **av, t_ping *ping); // İmza güncellendi

@@ -3,30 +3,33 @@
 int get_gateway(t_ping *ping)
 {
     FILE *fp;
-    char line[128];
+    char line[256];
     char *gateway = NULL;
 
-    // ip route komutunu çalıştır ve çıktıyı oku
-    fp = popen("ip route | grep default", "r");
+    // /proc/net/route dosyasını aç
+    fp = fopen("/proc/net/route", "r");
     if (fp == NULL) {
-        perror("Failed to run command");
+        perror("Failed to open /proc/net/route");
         return -1;
     }
 
-    // Çıktıyı oku ve "via" kelimesinden sonraki IP adresini ayıkla
-    while (fgets(line, sizeof(line)-1, fp) != NULL) {
-        char *via_ptr = strstr(line, "via ");
-        if (via_ptr) {
-            gateway = strdup(via_ptr + 4);  // "via " 4 karakter uzunluğunda
-            char *space_ptr = strchr(gateway, ' ');  // IP adresinin sonunu bul
-            if (space_ptr) {
-                *space_ptr = '\0';  // IP adresinin sonuna null karakter ekle
+    // Dosyayı satır satır oku
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        char iface[IFNAMSIZ];
+        unsigned long dest, gate;
+
+        // İlk satırı atla (başlık satırı)
+        if (sscanf(line, "%s\t%lx\t%lx", iface, &dest, &gate) == 3) {
+            if (dest == 0) { // Default route
+                struct in_addr addr;
+                addr.s_addr = gate;
+                gateway = inet_ntoa(addr);
+                break;
             }
-            break;
         }
     }
 
-    pclose(fp);
+    fclose(fp);
 
     if (gateway == NULL) {
         return -1;
@@ -35,10 +38,8 @@ int get_gateway(t_ping *ping)
     // IP adresini sockaddr_in yapısına çevir
     if (inet_pton(AF_INET, gateway, &(ping->gateway_addr.sin_addr)) <= 0) {
         perror("inet_pton");
-        free(gateway);
         return -1;
     }
 
-    free(gateway);
     return 0;
 }

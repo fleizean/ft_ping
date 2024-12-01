@@ -10,5 +10,6 @@ bool send_ping(int sock, struct sockaddr_in *dest_addr, char *packet, int packet
         fprintf(stderr, "%d bytes from gateway (%s): %s\n", packet_size, ip_str, strerror(errno));
         return false;
     }
+    fprintf(stderr, "%d bytes from gateway (%s): %s\n", packet_size, strerror(errno));
     return true;
 }

@@ -9,5 +9,7 @@ void create_ping_packet(char *packet, int sequence)
     icmp_hdr->un.echo.id = getpid();
     icmp_hdr->un.echo.sequence = sequence;
     icmp_hdr->checksum = 0;
-    icmp_hdr->checksum = calculate_checksum((unsigned short *)icmp_hdr, ICMP_HDRLEN);
+    memset(packet + ICMP_HDRLEN, 0, PING_PKT_S - ICMP_HDRLEN);
+
+    icmp_hdr->checksum = calculate_checksum((unsigned short *)packet, PING_PKT_S);
 }

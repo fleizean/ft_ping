@@ -41,7 +41,7 @@ CMD ["/usr/sbin/sshd", "-D"]
 # ssh -p 2222 dockeruser@localhost
 # Password: dockerpassword
 # How to known host key
-# ssh-keygen -f "/home/username/.ssh/known_hosts" -R "[localhost]:2222"
+# ssh-keygen -f "/Users/fleizean/.ssh/known_hosts" -R "[localhost]:2222"
 
 # How to stop the Docker container
 # docker stop ssh-server

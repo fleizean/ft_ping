@@ -37,8 +37,9 @@ int get_gateway_mac(t_ping *ping)
     // MAC adresini al
     memcpy(ping->gateway_mac, arpreq.arp_ha.sa_data, 6);
 
-    //pritf("Gateway MAC Adresi: %02x:%02x:%02x:%02x:%02x:%02x\n",
-           ping->gateway_nmac[0], ping->gateway_mac[1], ping->gateway_mac[2], ping->gateway_mac[3], ping->gateway_mac[4], ping->gateway_mac[5]);
+    // printf("Gateway MAC Adresi: %02x:%02x:%02x:%02x:%02x:%02x\n",
+    //        ping->gateway_mac[0], ping->gateway_mac[1], ping->gateway_mac[2], 
+    //        ping->gateway_mac[3], ping->gateway_mac[4], ping->gateway_mac[5]);
 
     return 0;
 }

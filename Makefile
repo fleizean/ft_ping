@@ -22,7 +22,7 @@ all: $(NAME)
 
 # Linking object files to create the final executable
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lm
 
 # Compiling C files into object files
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "../includes/colors.h"
+#include "../includes/ft_ping.h"
 
 void help_message() 
 {
@@ -24,4 +25,38 @@ void help_message()
 
     printf("\n%sExample:%s\n", GREEN, RESET);
     printf("  %sft_ping%s -v google.com\n", BLUE, RESET);
+}
+
+/**
+ * Custom square root function using binary search method
+ * @param nb The number to calculate the square root of
+ * @return The square root of nb, or -NAN if nb is negative
+ */
+double ft_sqrt(const double nb)
+{
+    const double accuracy = SQRT_NEWTON_ACCURACY;
+    double lower;
+    double upper;
+    double sqrt;
+
+    if (nb < 0)
+        return (-NAN);
+    if (nb == 0)
+        return (0.0);
+    if (nb < 1) {
+        lower = nb;
+        upper = 1;
+    }
+    else {
+        lower = 1;
+        upper = nb;
+    }
+    while ((upper - lower) > accuracy) {
+        sqrt = (lower + upper) / 2;
+        if (sqrt * sqrt > nb)
+            upper = sqrt;
+        else
+            lower = sqrt;
+    }
+    return ((lower + upper) / 2);
 }

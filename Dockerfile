@@ -1,5 +1,5 @@
 # Dockerfile
-FROM ubuntu:latest
+FROM ubuntu:22.04
 
 # Update and install necessary packages
 RUN apt-get update && apt-get install -y \
@@ -17,14 +17,16 @@ RUN usermod -aG sudo dockeruser
 
 # Configure SSH
 RUN mkdir /var/run/sshd
-RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
-RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config
+RUN echo "PermitRootLogin yes\nPasswordAuthentication yes" >> /etc/ssh/sshd_config
 
 # Copy parent directory contents into the container
-COPY . /home/dockeruser/
+COPY . /home/dockeruser/ft_ping
+
+# Change ownership after copying the files
+RUN chown -R dockeruser:dockeruser /home/dockeruser/ft_ping
 
 # Set the working directory
-WORKDIR /home/dockeruser/
+WORKDIR /home/dockeruser/ft_ping
 
 # Expose SSH port
 EXPOSE 22

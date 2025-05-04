@@ -24,10 +24,14 @@
 #include <sys/select.h>
 #include <netdb.h>
 #include <stdbool.h> // bool türü için ekleme
+#include <math.h>
 
 #define PACKET_SIZE 4096
 #define PING_SLEEP_RATE 1000000
 #define RECV_TIMEOUT 1
+
+// Define the ICMP header structure
+#define SQRT_NEWTON_ACCURACY 0.0001
 
 // ICMP header len for echo req
 #define ICMP_HDRLEN 8
@@ -43,7 +47,7 @@ typedef struct s_stats {
     suseconds_t rtt_min;
     suseconds_t rtt_max;
     suseconds_t rtt_total;
-    suseconds_t rtt_total_sq;
+    double rtt_total_sq;
     struct timeval start_time;
     uint packets_received;
     uint nb_errors;
@@ -85,6 +89,7 @@ int get_gateway(t_ping *ping);
 int get_gateway_mac(t_ping *ping);
 void start_ping(t_ping *ping);
 void signal_handler(int sig);
+double	ft_sqrt(const double nb);
 void help_message(void);
 
 #endif

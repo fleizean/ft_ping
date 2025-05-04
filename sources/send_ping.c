@@ -7,9 +7,9 @@ bool send_ping(int sock, struct sockaddr_in *dest_addr, char *packet, int packet
     {
         char ip_str[INET_ADDRSTRLEN];
         inet_ntop(AF_INET, &(dest_addr->sin_addr), ip_str, INET_ADDRSTRLEN);
-        fprintf(stderr, "%d bytes from gateway (%s): %s\n", packet_size, ip_str, strerror(errno));
+        // fprintf(stderr, "%d bytes from gateway (%s): %s\n", packet_size, ip_str, strerror(errno));
         return false;
     }
-    fprintf(stderr, "%d bytes from gateway (%s): %s\n", packet_size, strerror(errno));
+    // fprintf(stderr, "%d bytes sent\n", packet_size);
     return true;
 }

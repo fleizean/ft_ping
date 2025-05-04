@@ -19,6 +19,8 @@ int receive_ping(int sock, char *packet, int packet_size, bool *is_verbose_error
         perror("recvfrom");
         return -1;
     }
+    // This debug print can be commented out when everything is working
+    // printf("%d bytes received\n", bytes_received);
 
     struct iphdr *ip_hdr = (struct iphdr *)packet;
     struct icmphdr *icmp_hdr = (struct icmphdr *)(packet + (ip_hdr->ihl * 4));
@@ -29,14 +31,12 @@ int receive_ping(int sock, char *packet, int packet_size, bool *is_verbose_error
     }
     else if (icmp_hdr->type == ICMP_DEST_UNREACH)
     {
-
         char ip_str[INET_ADDRSTRLEN];
         inet_ntop(AF_INET, &(r_addr.sin_addr), ip_str, INET_ADDRSTRLEN);
         printf("%d bytes from gateway (%s): Destination Port Unreachable\n", bytes_received, ip_str);
         *is_verbose_error = true;
         return -1;
     }
-
 
     return -1;
 }
